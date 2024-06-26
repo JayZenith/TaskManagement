@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Create from './Create'
 import axios from 'axios'
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 function Home() {
     const [todos, setTodos] = useState([])
@@ -9,6 +11,13 @@ function Home() {
         .then(result => setTodos(result.data))
         .catch(err => console.log(err))
     }, [])
+
+    const handleEdit = (id) => {
+        axios.put('http://localhost:3001/update/'+id)
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
+    }
+
   return (
     <div className="home">
         <h2>Wormhole</h2>
@@ -20,7 +29,11 @@ function Home() {
             :
             todos.map(todo => (
                 <div className="todo-tasks"> 
-                    {todo.task}
+                    <div className='checkbox' onClick={() => handleEdit(todo._id)}>
+                    <i class="bi bi-circle"></i>
+                        {todo.task}
+                    </div>
+                    <i class="bi bi-trash"></i>
                 </div>
             ))
         }
