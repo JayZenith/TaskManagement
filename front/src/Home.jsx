@@ -16,7 +16,17 @@ function Home() {
         axios.put('http://localhost:3001/update/'+id)
         .then(result => console.log(result))
         .catch(err => console.log(err))
+        return alert("Task Completed");
+  
     }
+
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:3001/delete/'+id)
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
+        return alert("Deleted Successfully");
+    }
+
 
   return (
     <div className="home">
@@ -30,10 +40,13 @@ function Home() {
             todos.map(todo => (
                 <div className="todo-tasks"> 
                     <div className='checkbox' onClick={() => handleEdit(todo._id)}>
-                    <i class="bi bi-circle"></i>
-                        {todo.task}
+                    {todo.done ? 
+                        <i class="bi bi-circle-fill"></i>
+                    : <i class="bi bi-circle"></i>
+                    }
+                    {todo.task}
                     </div>
-                    <i class="bi bi-trash"></i>
+                    <i class="bi bi-trash" onClick={() => handleDelete(todo._id)}></i>
                 </div>
             ))
         }
