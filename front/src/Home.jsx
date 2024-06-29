@@ -30,12 +30,12 @@ function Home() {
 
   return (
     <div className="home">
-        <h2>Wormhole</h2>
+        <h2>Task Management</h2>
         <Create />
         {
             todos.length === 0 
             ?
-            <div><h2>Empty</h2></div>
+            <div><h2>No current tasks</h2></div>
             :
             todos.map(todo => (
                 <div className="todo-tasks"> 

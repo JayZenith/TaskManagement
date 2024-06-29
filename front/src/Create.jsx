@@ -11,8 +11,8 @@ function Create() {
   }
   return (
     <div className="create_field">
-        <input type="text" placeholder='Enter' onChange={(e) => setTask(e.target.value)} />
-        <button type="button" onClick={handleEnter}>Enter</button>
+        <input type="text" placeholder='Enter the task' onChange={(e) => setTask(e.target.value)} />
+        <button type="button" onClick={handleEnter}>Create</button>
     </div>
   )
 }
