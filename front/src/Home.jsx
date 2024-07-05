@@ -6,6 +6,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Home() {
     const [todos, setTodos] = useState([])
+    const [data, setData] = useState([])
+
     useEffect(() => {
         axios.get('http://localhost:3001/get')
         .then(result => setTodos(result.data))
@@ -16,7 +18,17 @@ function Home() {
         axios.put('http://localhost:3001/update/'+id)
         .then(result => console.log(result))
         .catch(err => console.log(err))
-        return alert("Task Completed");
+        location.reload();
+        //return alert("Task Completed");
+  
+    }
+
+    const handleRet = (id) => {
+        axios.get('http://localhost:3001/retreive/'+id)
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
+        //location.reload();
+        return alert("Task Retrieve");
   
     }
 
@@ -24,6 +36,7 @@ function Home() {
         axios.delete('http://localhost:3001/delete/'+id)
         .then(result => console.log(result))
         .catch(err => console.log(err))
+        //location.reload();
         return alert("Deleted Successfully");
     }
 
@@ -47,6 +60,7 @@ function Home() {
                     {todo.task}
                     </div>
                     <i class="bi bi-trash" onClick={() => handleDelete(todo._id)}></i>
+                    {/* <i class="bi bi-trash" onClick={() => handleRet(todo._id)}></i> */}
                 </div>
             ))
         }

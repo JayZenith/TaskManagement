@@ -7,6 +7,7 @@ function Create() {
     axios.post('http://localhost:3001/add', {task: task})
     .then(result => console.log(result))
     .catch(err => console.log(err) )
+    location.reload();
     return alert("Task Created");
   }
   return (
