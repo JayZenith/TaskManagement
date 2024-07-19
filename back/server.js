@@ -55,7 +55,7 @@ function createTable(){
 app.get("/posts", (req,res) => {
     db.query('SELECT * FROM posts', (err,result) => {
         if (err) throw new Error(err);
-        console.log(result);
+        res.json(result);
         res.end();
     })
 })

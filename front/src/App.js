@@ -3,6 +3,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
 import Task from './components/Task';
+import Posts from './components/Posts';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/home" element={<Home/>}/>
             <Route path="/task" element={<Task/>}/>
+            <Route path="/post" element={<Posts/>}/>
           </Routes>
         </Router>
     </div>
