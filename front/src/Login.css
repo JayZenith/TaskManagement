@@ -1,0 +1,175 @@
+.home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+.create_field input{
+  width: 300px;
+  padding: 10px;
+  border-bottom: 2px solid;
+  outline: none;
+}
+
+form{
+  width: 400px;
+  padding: 10px;
+  border-bottom: 2px solid;
+  outline: none;
+}
+
+.create_field button{
+  padding: 10px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.todo-tasks{
+  display: flex;
+  align-items: center;
+  width: 400px;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
+  height: 35px;
+  padding: 2px 5px 2px 5px;
+  margin-top: 15px;
+}
+
+
+.bi-circle{
+  margin-right: 10px;
+  background-color: white;
+  border-radius: 50px/50px;
+}
+
+.bi-circle-fill{
+  margin-right: 10px;
+  background-color: red;
+  color: red;
+  border-radius: 50px/50px;
+}
+
+
+
+.home .taskpage h1{
+  color: red;
+}
+
+
+/*uSER LOGIN*/
+.home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+
+  
+  .create_field input{
+    width: 300px;
+    padding: 10px;
+    border-bottom: 2px solid;
+    outline: none;
+  }
+
+  form{
+    width: 400px;
+    padding: 10px;
+    border-bottom: 2px solid;
+    outline: none;
+  }
+  
+  .create_field button{
+    padding: 10px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .todo-tasks{
+    display: flex;
+    align-items: center;
+    width: 400px;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    height: 35px;
+    padding: 2px 5px 2px 5px;
+    margin-top: 15px;
+  }
+  
+  
+  .bi-circle{
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 50px/50px;
+  }
+  
+  .bi-circle-fill{
+    margin-right: 10px;
+    background-color: red;
+    color: red;
+    border-radius: 50px/50px;
+  }
+  
+  
+
+  .home .taskpage h1{
+    color: red;
+  }
+
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+  }
+  
+  label,
+  button {
+    margin-top: 1rem;
+  }
+  
+  .instructions > svg {
+    margin-right: 0.25rem;
+  }
+  
+  .offscreen {
+    position: absolute;
+    left: -9999px;
+  }
+  
+  
+  .errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+  }
+  
+  

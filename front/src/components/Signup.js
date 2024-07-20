@@ -3,6 +3,7 @@ import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { uuid } from './uuid';
+import '../Login.css';
 
 
 function Signup() {

@@ -14,14 +14,16 @@
     "bootstrap-icons": "^1.11.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "formik": "^2.4.6",
     "mongoos": "^0.0.1-security",
     "mongoose": "^8.4.5",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
