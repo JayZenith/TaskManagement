@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 
 const app = express();
 app.use(cors());
@@ -33,6 +34,7 @@ db.connect((err) =>{
             if (err) throw new Error(err);
             createTable();
             createCommentTable();
+            createUsersTable()
         });
     })
 });
@@ -41,6 +43,7 @@ function createTable(){
     db.query(`CREATE TABLE IF NOT EXISTS posts (
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
         postID INT,
+        userID INT, 
         title VARCHAR(30),
         postText VARCHAR(100),
         username VARCHAR(30)
@@ -60,6 +63,18 @@ function createCommentTable(){
     )`, (err) =>{
         if (err) throw new Error(err);
         console.log("Comment Table created/exists");
+    });
+}
+
+function createUsersTable(){
+    db.query(`CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        username VARCHAR(30),
+        password VARCHAR(255),
+        email VARCHAR(30)
+    )`, (err) =>{
+        if (err) throw new Error(err);
+        console.log("Users Table created/exists");
     });
 }
 
@@ -126,8 +141,60 @@ app.post("/comments", (req,res) => {
         if (err) throw new Error(err);
         console.log("1 comment inserted");
         res.json(cmt);
+    });
+});
+
+
+/* USERS */
+
+app.post("/signup", (req,res) => {
+    const user =req.body
+    bcrypt.hash(user.password, 10).then((hash) => {
+        db.query('INSERT INTO users SET ?', {
+            username: user.username,
+            password: hash,
+            email: user.email
+        }, (err) => {
+            if (err) throw new Error(err);
+            console.log("1 user inserted");
+        });
+    });
+    res.json("success");
+});
+
+app.post("/login", (req,res) => {
+    const user = req.body;
+    let sql = `SELECT * FROM users WHERE username='${user.username}'`;
+    db.query(sql, (err, result) => {
+        if(err) throw new Error(err);
+        //res.json(!result[0]);
+        if(!result[0]){ 
+            res.json({error:"User dosen't exist"}); 
+        }
+        else{
+            bcrypt.compare(user.password,result[0].password).then((match)=>{
+                if(!match) 
+                    res.json({error:"wrong username and password combination"});
+                else
+                    res.json("YOU LOGGGED IN!");
+            });
+
+        }
+    });
+    /*
+    bcrypt.compare(user.password,result[0].password).then((match)=>{
+            if(!match) 
+                res.json({error:"wrong username and password combination"});
+            else
+                res.json("YOU LOGGGED IN!");
+        });
+
+    bcrypt.compare(user.password,result[0].password).then((match)=>{
+        if(!match) res.json({error:"wrong username and password combination"});
+        res.json("YOU LOGGGED IN!");
     })
-})
+    */
+});
 
 app.listen(3001, () => {
     console.log("listening server.js");
