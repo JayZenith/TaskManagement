@@ -32,6 +32,7 @@ db.connect((err) =>{
         db.changeUser({ database: "mysqlDB"}, (err) => {
             if (err) throw new Error(err);
             createTable();
+            createCommentTable();
         });
     })
 });
@@ -39,12 +40,26 @@ db.connect((err) =>{
 function createTable(){
     db.query(`CREATE TABLE IF NOT EXISTS posts (
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        postID INT,
         title VARCHAR(30),
         postText VARCHAR(100),
         username VARCHAR(30)
     )`, (err) =>{
         if (err) throw new Error(err);
-        console.log("Table created/exists");
+        console.log("Post Table created/exists");
+    });
+}
+
+function createCommentTable(){
+    db.query(`CREATE TABLE IF NOT EXISTS comments (
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        commentID INT,
+        postID INT,
+        username VARCHAR(30),
+        commentBody VARCHAR(100)
+    )`, (err) =>{
+        if (err) throw new Error(err);
+        console.log("Comment Table created/exists");
     });
 }
 
@@ -70,6 +85,47 @@ app.post("/posts", (req,res) => {
         if (err) throw new Error(err);
         console.log("1 post inserted");
         res.json(post);
+    })
+})
+
+/*
+app.get("/byId/:id", (req,res) => {
+    id = req.params.id;
+    db.query(`SELECT * FROM posts`, (err, result) => {
+        if(err) throw new Error(err);
+        res.json(result);
+        res.end();
+    })
+})
+*/
+
+app.get("/singlePost/byId/:id", (req,res) => {
+    id = req.params.id;
+    db.query(`SELECT * FROM posts WHERE id = ${id}`, (err, result) => {
+        if(err) throw new Error(err);
+        res.json(result);
+        //res.end();
+    })
+})
+
+app.get("/comments/:postId", (req,res) => {
+    postId = req.params.postId;
+    db.query(`SELECT * FROM comments WHERE postID = ${postId}`, (err, result) => {
+        if(err) throw new Error(err);
+        res.json(result);
+        //res.end();
+    })
+})
+
+app.post("/comments", (req,res) => {
+    const cmt = req.body;
+    db.query('INSERT INTO comments SET ?', {
+        commentBody: cmt.commentBody ,
+        postID: cmt.postID
+    }, (err) => {
+        if (err) throw new Error(err);
+        console.log("1 comment inserted");
+        res.json(cmt);
     })
 })
 

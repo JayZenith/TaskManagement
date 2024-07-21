@@ -5,6 +5,8 @@ import Home from './components/Home';
 import Task from './components/Task';
 import Posts from './components/Posts';
 import CreatePost from './components/CreatePost';
+import SinglePost from './components/SinglePost';
+
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
             <Route path="/task" element={<Task/>}/>
             <Route path="/post" element={<Posts/>}/>
             <Route path="/createpost" element={<CreatePost/>}/>
+            <Route path="/singlePost/:id" element={<SinglePost/>}/>
+
           </Routes>
         </Router>
     </div>
