@@ -25,11 +25,23 @@ function SinglePost() {
       .post("http://localhost:3001/comments", {
         commentBody: newComment,
         postID: id,
-      })
+      }, 
+      {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      }
+    
+      )
       .then((res) => {
-        const commentToAdd = { commentBody: newComment };
-        setComments([...comments, commentToAdd]);
-        setNewComment("") //to make the newComment value empty within input
+        if(res.data.error){
+          alert(res.data.error);
+        }
+        else{
+          const commentToAdd = { commentBody: newComment };
+          setComments([...comments, commentToAdd]);
+          setNewComment("") //to make the newComment value empty within input
+        }
       });
   };
   return (

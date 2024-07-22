@@ -15,10 +15,17 @@ function Login() {
     e.preventDefault();
 
     try{
-        await axios.post("http://localhost:3001", {
+        await axios.post("http://localhost:3001/login", {
             email,password
         })
         .then(res=>{
+            if(res.data.error){
+                alert(res.data.error);
+            }
+            else{
+                sessionStorage.setItem("accessToken", res.data); 
+            }
+            /*
             if(res.data.status==="exist"){
 
                 history("/task", {state:{id:res.data.name, uid:res.data.uId}})
@@ -26,6 +33,7 @@ function Login() {
             else if(res.data.status==="notexist"){
                 alert("User not signed up")
             }
+            */
         })
         .catch(e=>{
             alert("Wrong details")

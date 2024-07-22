@@ -2,6 +2,10 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const { validateToken } = require('./middleware/AuthMiddleware');
+
+const {sign} = require('jsonwebtoken');
+const { validate } = require('./mongo');
 
 const app = express();
 app.use(cors());
@@ -132,7 +136,7 @@ app.get("/comments/:postId", (req,res) => {
     })
 })
 
-app.post("/comments", (req,res) => {
+app.post("/comments", validateToken, (req,res) => {
     const cmt = req.body;
     db.query('INSERT INTO comments SET ?', {
         commentBody: cmt.commentBody ,
@@ -149,9 +153,9 @@ app.post("/comments", (req,res) => {
 
 app.post("/signup", (req,res) => {
     const user =req.body
-    bcrypt.hash(user.password, 10).then((hash) => {
+    bcrypt.hash(user.pwd, 10).then((hash) => {
         db.query('INSERT INTO users SET ?', {
-            username: user.username,
+            username: user.user,
             password: hash,
             email: user.email
         }, (err) => {
@@ -162,7 +166,7 @@ app.post("/signup", (req,res) => {
     res.json("success");
 });
 
-app.post("/login", (req,res) => {
+app.post("/", (req,res) => {
     const user = req.body;
     let sql = `SELECT * FROM users WHERE username='${user.username}'`;
     db.query(sql, (err, result) => {
@@ -181,19 +185,31 @@ app.post("/login", (req,res) => {
 
         }
     });
-    /*
-    bcrypt.compare(user.password,result[0].password).then((match)=>{
-            if(!match) 
-                res.json({error:"wrong username and password combination"});
-            else
-                res.json("YOU LOGGGED IN!");
-        });
+});
 
-    bcrypt.compare(user.password,result[0].password).then((match)=>{
-        if(!match) res.json({error:"wrong username and password combination"});
-        res.json("YOU LOGGGED IN!");
-    })
-    */
+app.post("/login", (req,res) => {
+    const user = req.body;
+    let sql = `SELECT * FROM users WHERE email='${user.email}'`;
+    db.query(sql, (err, result) => {
+        if(err) throw new Error(err);
+        //res.json(!result[0]);
+        if(!result[0]){ 
+            res.json({error:"User dosen't exist"}); 
+        }
+        else{
+            bcrypt.compare(user.password,result[0].password).then((match)=>{
+                if(!match) 
+                    res.json({error:"wrong username and password combination"});
+                else{
+                    const accessToken = sign(
+                        {email: user.email, id:user.id}, 
+                        "importantsecret"
+                    );
+                    res.json(accessToken);
+                }
+            });
+        }
+    });
 });
 
 app.listen(3001, () => {

@@ -90,8 +90,7 @@ function Signup() {
     try{
         await axios.post("http://localhost:3001/signup", {
             //userId,user,email,pwd
-            
-            user,email,pwd
+            user,pwd,email
         })
         .then(res=>{
             if(res.data==="exist"){
@@ -126,10 +125,13 @@ function Signup() {
         console.log("\n\n\n\nHere\n\n\n\n\n")
         console.log(user)
         await axios.post("http://localhost:3001/signup", {
-            userId,user,email,pwd
+            //userId,user,email,pwd
+            user, pwd, email
             //user,email,pwd
         })
         .then(res=>{
+            console.log(res);
+            /*
             if(res.data==="exist"){
                 alert("User exists")
                 //history("/home", {state:{id:email}})
@@ -138,6 +140,7 @@ function Signup() {
                 history("/task", {state:{id:user, uid:userId}})
                 //history("/home", {state:{id:email}})
             }
+            */
         })
         .catch(e=>{
             alert("Wrong details")
