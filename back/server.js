@@ -38,7 +38,8 @@ db.connect((err) =>{
             if (err) throw new Error(err);
             createTable();
             createCommentTable();
-            createUsersTable()
+            createUsersTable();
+
         });
     })
 });
@@ -138,9 +139,11 @@ app.get("/comments/:postId", (req,res) => {
 
 app.post("/comments", validateToken, (req,res) => {
     const cmt = req.body;
+    const userName = req.user.username;
     db.query('INSERT INTO comments SET ?', {
         commentBody: cmt.commentBody ,
-        postID: cmt.postID
+        postID: cmt.postID,
+        username: userName,
     }, (err) => {
         if (err) throw new Error(err);
         console.log("1 comment inserted");
@@ -202,7 +205,7 @@ app.post("/login", (req,res) => {
                     res.json({error:"wrong username and password combination"});
                 else{
                     const accessToken = sign(
-                        {email: user.email, id:user.id}, 
+                        {email: user.email, id:user.id, username:result[0].username}, 
                         "importantSecret"
                     );
                     res.json(accessToken);

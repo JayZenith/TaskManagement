@@ -24,6 +24,7 @@ function Login() {
             }
             else{
                 sessionStorage.setItem("accessToken", res.data); 
+                history("/post");
             }
             /*
             if(res.data.status==="exist"){
