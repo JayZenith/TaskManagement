@@ -22,16 +22,16 @@ function SinglePost() {
 
   const addComment = () => {
     axios
-      .post("http://localhost:3001/comments", {
-        commentBody: newComment,
-        postID: id,
-      }, 
-      {
-        headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
-        },
-      }
-    
+      .post("http://localhost:3001/comments", 
+        {
+          commentBody: newComment,
+          postID: id,
+        }, 
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
       )
       .then((res) => {
         if(res.data.error){

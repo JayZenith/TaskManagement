@@ -203,7 +203,7 @@ app.post("/login", (req,res) => {
                 else{
                     const accessToken = sign(
                         {email: user.email, id:user.id}, 
-                        "importantsecret"
+                        "importantSecret"
                     );
                     res.json(accessToken);
                 }
@@ -245,6 +245,8 @@ app.get('/createdb', (req, res) => {
 })
 
 
+/*
+
 app.post('/signup', (req, res) => {
     const sql = "INSERT INTO register(`userId`, `user`, `email`, `password`) VALUES (?)";
     const{userId, user,email,pwd} = req.body
@@ -262,3 +264,5 @@ app.post('/signup', (req, res) => {
         return res.json(data);
     })
 })
+
+*/
