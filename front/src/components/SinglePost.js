@@ -38,7 +38,7 @@ function SinglePost() {
           alert(res.data.error);
         }
         else{
-          const commentToAdd = { commentBody: newComment };
+          const commentToAdd = { commentBody: newComment, username: res.data.username};
           setComments([...comments, commentToAdd]);
           setNewComment("") //to make the newComment value empty within input
         }

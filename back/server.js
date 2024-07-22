@@ -147,7 +147,11 @@ app.post("/comments", validateToken, (req,res) => {
     }, (err) => {
         if (err) throw new Error(err);
         console.log("1 comment inserted");
-        res.json(cmt);
+        res.json({
+            commentBody: cmt.commentBody ,
+            postID: cmt.postID,
+            username: userName,
+        });
     });
 });
 
