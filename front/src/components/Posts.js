@@ -19,7 +19,17 @@ function Posts() {
         }, {
             headers: {accessToken: localStorage.getItem("accessToken")}
         }).then((response) => {
-            alert(response.data);
+            setListOfPosts(listOfPosts.map((post) => {
+                if(post.id === postId){
+                    alert(response.data.liked)
+                    if(response.data.liked)
+                        return{...post, dt:post.dt+1}
+                    else
+                        return{...post, dt:post.dt-1}
+                } else {
+                    return post;
+                }
+            }))
         })
     }
   

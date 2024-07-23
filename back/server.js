@@ -299,7 +299,8 @@ app.post("/likes", validateToken, (req, res) => {
           },
           (err) => {
             if (err) throw new Error(err);
-            res.json("Liked the Post");
+            //res.json("Liked");
+            res.json({liked: true});
           }
         );
       } else {
@@ -307,7 +308,8 @@ app.post("/likes", validateToken, (req, res) => {
           `DELETE FROM likes WHERE userID='${userID}' AND postID='${postID}'`,
           (err, result) => {
             if (err) throw new Error(err);
-            res.json("Unliked the Post");
+            //res.json("Unliked");
+            res.json({liked: false});
           }
         );
       }
