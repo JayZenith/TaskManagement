@@ -186,11 +186,12 @@ app.post("/comments", validateToken, (req, res) => {
     (err, resp) => {
       if (err) throw new Error(err);
       console.log("1 comment inserted");
-      console.log();
+      console.log(resp.insertId);
       res.json({
         commentBody: cmt.commentBody,
         postID: cmt.postID,
         username: userName,
+        id: resp.insertId,
       });
     }
   );

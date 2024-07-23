@@ -21,7 +21,7 @@ function SinglePost() {
     axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
       setComments(response.data);
     });
-  }, [comments]); //did this fix problem of having to rerender upon create/delete comment??
+  }, []); //did this fix problem of having to rerender upon create/delete comment??
 //thought is rerender any change to comments and abovce gets send back comment details
   const addComment = () => {
     axios
@@ -45,7 +45,7 @@ function SinglePost() {
           const commentToAdd = {
             commentBody: newComment,
             username: res.data.username,
-            //id: res.data.id,
+            id: res.data.id,
           };
           setComments([...comments, commentToAdd]);
           setNewComment(""); //to make the newComment value empty within input
