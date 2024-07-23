@@ -83,6 +83,17 @@ function createUsersTable(){
     });
 }
 
+function createUsersTable(){
+    db.query(`CREATE TABLE IF NOT EXISTS likes (
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        postID INT,
+        userID INT
+    )`, (err) =>{
+        if (err) throw new Error(err);
+        console.log("Users Table created/exists");
+    });
+}
+
 
 //const postRouter = require("./routes/Posts");
 //app.use("/posts", postRouter);
@@ -234,6 +245,33 @@ app.post("/login", (req,res) => {
 app.get('/auth', validateToken, (req,res) =>{
     res.json(req.user);
 })
+
+
+
+/*LIKES*/
+app.post("/likePost", validateToken, (req,res) => {
+    const { postID } = req.body; 
+    const userID = req.user.id;
+    db.query(`SELECT * FROM likes WHERE userID='${userID}' AND postID='${postID}'`, (err,result)=>{
+        if(err) throw new Error(err);
+        if(!result[0]){
+            db.query('INSERT INTO likes SET ?', {
+                postID: postID,
+                userID: userID
+            }, (err) => {
+                if (err) throw new Error(err);
+                res.json("1 like inserted");
+            });
+        }
+        else{
+            db.query(`DELETE FROM likes WHERE userID='${userID}' AND postID='${postID}'`, (err, result)=>{
+                if (err) throw new Error(err);
+                res.json({noti:"users like removed from post"});
+            })
+        }
+    });
+})
+
 
 app.listen(3001, () => {
     console.log("listening server.js");
