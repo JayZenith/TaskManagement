@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom'
 import '../Login.css';
+import { AuthContext } from '../helpers/AuthContext'
 
 function Login() {
 
@@ -10,6 +11,8 @@ function Login() {
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
   const [userId, setUserID]=useState('')
+
+  const {setAuthState} = useContext(AuthContext)
 
   async function submit(e){
     e.preventDefault();
@@ -23,7 +26,8 @@ function Login() {
                 alert(res.data.error);
             }
             else{
-                sessionStorage.setItem("accessToken", res.data); 
+                localStorage.setItem("accessToken", res.data.token); 
+                setAuthState({username: res.data.username, id:res.data.id, status: true})
                 history("/post");
             }
             /*

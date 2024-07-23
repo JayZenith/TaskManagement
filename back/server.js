@@ -144,17 +144,28 @@ app.post("/comments", validateToken, (req,res) => {
         commentBody: cmt.commentBody ,
         postID: cmt.postID,
         username: userName,
-    }, (err) => {
+    }, (err, resp) => {
         if (err) throw new Error(err);
         console.log("1 comment inserted");
+        console.log()
         res.json({
             commentBody: cmt.commentBody ,
             postID: cmt.postID,
             username: userName,
         });
+    
     });
 });
 
+
+app.delete("/deleteComment/:commentId", validateToken, (req,res) => {
+    const commentID = req.params.commentId;
+    db.query(`DELETE FROM comments WHERE id=${commentID}`, (err, result) =>{
+        if(err) throw new Error(err);
+        //res.json(result)
+    })
+    res.json("deleted comment");
+})
 
 /* USERS */
 
@@ -209,15 +220,20 @@ app.post("/login", (req,res) => {
                     res.json({error:"wrong username and password combination"});
                 else{
                     const accessToken = sign(
-                        {email: user.email, id:user.id, username:result[0].username}, 
+                        {email: user.email, id:result[0].id, username:result[0].username}, 
                         "importantSecret"
                     );
-                    res.json(accessToken);
+                    res.json({token: accessToken, username: result[0].username, id:result[0].id, email:user.email});
                 }
             });
         }
     });
 });
+
+
+app.get('/auth', validateToken, (req,res) =>{
+    res.json(req.user);
+})
 
 app.listen(3001, () => {
     console.log("listening server.js");
