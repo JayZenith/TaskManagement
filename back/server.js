@@ -107,14 +107,30 @@ function createUsersTable() {
 //const postRouter = require("./routes/Posts");
 //app.use("/posts", postRouter);
 
-app.get("/posts", (req, res) => {
+app.get("/posts", validateToken, (req, res) => {
+  //console.log(req.user.id)
   db.query(
     "select posts.title, posts.postText, posts.username, posts.id, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
     (err, result) => {
       if (err) throw new Error(err);
-      console.log(result[0].dt);
-      res.json(result);
-      res.end();
+      //console.log(result[0].dt);
+      db.query(
+        `select posts.id from posts inner join likes on posts.id=likes.postID inner join users on ${req.user.id} = likes.userID`,
+        (err, resultant) => {
+            if(err) throw new Error(err);
+            //console.log(resultant);
+            resultant = resultant.filter((value, index, self) =>
+              index === self.findIndex((t) => (
+                t.id === value.id 
+              ))
+            )
+            res.json({ listOfPosts: result, userLikes: resultant });
+        }
+      )
+      //const userLikes = 10;
+      //res.json({ listOfPosts: result, userLikes: userLikes });
+      //res.json(result);
+      //res.end();
     }
   );
   /*

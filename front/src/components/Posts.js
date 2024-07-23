@@ -3,13 +3,27 @@ import axios from "axios";
 import { useEffect } from "react";
 import "../Posts.css";
 import { Link, useNavigate } from "react-router-dom";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Posts() {
     const [listOfPosts, setListOfPosts] = useState([]);
+    const [likedPosts, setLikedPosts] = useState([])
     let navigate = useNavigate();
     useEffect(() => {
-        axios.get("http://localhost:3001/posts").then((res) => {
-        setListOfPosts(res.data);
+        axios.get("http://localhost:3001/posts", {
+            headers: {accessToken: localStorage.getItem("accessToken")}
+        }).then((res) => {
+        //setListOfPosts(res.data);
+        setListOfPosts(res.data.listOfPosts);
+        //alert(res.data.listOfPosts);
+        setLikedPosts(
+          res.data.userLikes.map((like) => {
+            return like.id;
+          })
+        );
+        //console.log([...likedPosts, 5])
+        console.log("yo")
+        console.log(res.data.userLikes);
         });
     }, []);
 
@@ -21,7 +35,7 @@ function Posts() {
         }).then((response) => {
             setListOfPosts(listOfPosts.map((post) => {
                 if(post.id === postId){
-                    alert(response.data.liked)
+                    //alert(response.data.liked)
                     if(response.data.liked)
                         return{...post, dt:post.dt+1}
                     else
@@ -30,7 +44,17 @@ function Posts() {
                     return post;
                 }
             }))
+            if(likedPosts.includes(postId)){
+              setLikedPosts(
+                likedPosts.filter((id) => {
+                  return id != postId;
+                })
+              );
+            } else {
+              setLikedPosts([...likedPosts,postId])
+            }
         })
+
     }
   
 
@@ -49,10 +73,15 @@ function Posts() {
                   }}
             > {val.postText} </div>
             <div className="footer"> {val.username} 
-                <button onClick={() => {
-                    likePost(val.id);
-                }}
-                >Like</button>
+                
+                <i class="bi bi-hand-thumbs-up"
+                  onClick={() => {
+                      likePost(val.id);
+                  }}
+                  className={likedPosts.includes(val.id) ? "bi bi-hand-thumbs-up" : "bi bi-hand-thumbs-up red" 
+                    
+                  }
+                ></i>
                 <label>
                     {val.dt}
                 </label>
