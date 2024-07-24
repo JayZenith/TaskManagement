@@ -370,6 +370,39 @@ app.post("/likes", validateToken, (req, res) => {
 
 //app.get("/getLikes")
 
+app.put("/changepassword", validateToken, (req,res) => {
+  const {oldPassword, newPassword} = req.body;
+  db.query(`SELECT * FROM users WHERE username='${req.user.username}'`, (err, result) => {
+    if (err) throw new Error(err);
+    //res.json(!result[0]);
+    if (!result[0]) {
+      res.json({ error: "User dosen't exist" });
+    } else {
+      bcrypt.compare(oldPassword, result[0].password).then((match) => {
+        if (!match)
+          res.json({ error: "wrong password entered" });
+        else {
+          bcrypt.hash(newPassword, 10).then((hash) => {
+            db.query(
+              `UPDATE users SET password='${hash}' WHERE username='${req.user.username}'`,
+              //{
+                //username: user.user,
+                //password: hash,
+                //email: user.email,
+              //},
+              (err) => {
+                if (err) throw new Error(err);
+                console.log("password updated");
+              }
+            );
+          });
+          
+        }
+      });
+    }
+  });
+})
+
 app.listen(3001, () => {
   console.log("listening server.js");
 });

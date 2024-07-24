@@ -12,6 +12,7 @@ import axios from "axios";
 import PageNotFound from "./components/PageNotFound";
 import { useNavigate } from "react-router-dom";
 import Profile from "./components/Profile";
+import Settings from "./components/Settings";
 
 function App() {
 
@@ -92,6 +93,7 @@ function App() {
             <Route path="/createpost" element={<CreatePost />} />
             <Route path="/singlePost/:id" element={<SinglePost />} />
             <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/Settings/:id" element={<Settings />} />
             <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Router>
