@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import "../Posts.css";
 import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { AuthContext } from "../helpers/AuthContext";
 
 function Posts() {
     const [listOfPosts, setListOfPosts] = useState([]);
     const [likedPosts, setLikedPosts] = useState([])
     let navigate = useNavigate();
+    const { authState } = useContext(AuthContext);
+    
     useEffect(() => {
+      if (!localStorage.getItem("accessToken")){
+        navigate("/");
+      }else{
         axios.get("http://localhost:3001/posts", {
             headers: {accessToken: localStorage.getItem("accessToken")}
         }).then((res) => {
@@ -22,9 +28,10 @@ function Posts() {
           })
         );
         //console.log([...likedPosts, 5])
-        console.log("yo")
-        console.log(res.data.userLikes);
+        //console.log("yo")
+        //console.log(res.data.userLikes);
         });
+      }
     }, []);
 
     const likePost = (postId) => {

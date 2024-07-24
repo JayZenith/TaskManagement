@@ -143,14 +143,15 @@ app.get("/posts", validateToken, (req, res) => {
     */
 });
 
-app.post("/posts", (req, res) => {
+app.post("/posts", validateToken, (req, res) => {
   const post = req.body;
   db.query(
     "INSERT INTO posts SET ?",
     {
       title: post.title,
       postText: post.postText,
-      username: post.username,
+      username: req.user.username,
+     // username: post.username,
     },
     (err) => {
       if (err) throw new Error(err);
@@ -159,6 +160,7 @@ app.post("/posts", (req, res) => {
     }
   );
 });
+
 
 /*
 app.get("/byId/:id", (req,res) => {
@@ -222,6 +224,16 @@ app.delete("/deleteComment/:commentId", validateToken, (req, res) => {
   res.json("deleted comment");
 });
 
+app.delete("/deletePost/:deleteId", validateToken, (req,res)=>{
+  const deleteId = req.params.deleteId;
+  db.query(`DELETE FROM posts WHERE id=${deleteId}`, (err, result) => {
+    if (err) throw new Error(err);
+    //res.json(result)
+  });
+  res.json("deleted post");
+})
+
+
 /* USERS */
 
 app.post("/signup", (req, res) => {
@@ -260,6 +272,14 @@ app.post("/", (req, res) => {
     }
   });
 });
+
+app.get("/basicInfo/:id", (req,res) => {
+  const id = req.params.id;
+  db.query(`SELECT users.id, users.username, users.email FROM users WHERE id='${id}'`, (err,result)=>{
+    if(err) throw new Error(err);
+    res.json(result);
+  });
+})
 
 app.post("/login", (req, res) => {
   const user = req.body;

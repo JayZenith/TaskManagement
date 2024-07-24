@@ -27,7 +27,7 @@ function Login() {
             }
             else{
                 localStorage.setItem("accessToken", res.data.token); 
-                setAuthState({username: res.data.username, id:res.data.id, status: true})
+                setAuthState({username: res.data.username, id:res.data.id, email:res.data.email, status: true})
                 history("/post");
             }
             /*
