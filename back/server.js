@@ -36,8 +36,8 @@ db.connect((err) => {
     db.changeUser({ database: "mysqlDB" }, (err) => {
       if (err) throw new Error(err);
       createTable();
-      createCommentTable();
       createUsersTable();
+      createCommentTable();
     });
   });
 });
@@ -90,19 +90,7 @@ function createUsersTable() {
   );
 }
 
-function createUsersTable() {
-  db.query(
-    `CREATE TABLE IF NOT EXISTS likes (
-        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-        postID INT,
-        userID INT
-    )`,
-    (err) => {
-      if (err) throw new Error(err);
-      console.log("Users Table created/exists");
-    }
-  );
-}
+
 
 //const postRouter = require("./routes/Posts");
 //app.use("/posts", postRouter);
@@ -186,9 +174,25 @@ app.get("/singlePost/byId/:id", (req, res) => {
 
 app.get("/byuserId/:id", (req, res) => {
   id = req.params.id;
-  db.query(`SELECT * FROM posts WHERE userID = ${id}`, (err, result) => {
+  //db.query(`SELECT * FROM posts WHERE userID = ${id}`, (err, result) => {
+    db.query(
+      `select posts.title, posts.postText, posts.username, posts.id, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id`,
+      (err, result) => {
     if (err) throw new Error(err);
-    res.json(result);
+    //res.json(result);
+      db.query(
+        `select posts.id from posts inner join likes on posts.id=likes.postID inner join users on ${id} = likes.userID`,
+        (err, resultant) => {
+            if(err) throw new Error(err);
+            //console.log(resultant);
+            resultant = resultant.filter((value, index, self) =>
+              index === self.findIndex((t) => (
+                t.id === value.id 
+              ))
+            )
+            res.json({ listOfPosts: result, userLikes: resultant });
+        }
+      )
     //res.end();
   });
 });
