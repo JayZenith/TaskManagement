@@ -110,7 +110,7 @@ function createUsersTable() {
 app.get("/posts", validateToken, (req, res) => {
   //console.log(req.user.id)
   db.query(
-    "select posts.title, posts.postText, posts.username, posts.id, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
+    "select posts.title, posts.postText, posts.username, posts.id, posts.userID, count(distinct likes.id) as dt from posts left join likes on posts.id = likes.postID group by posts.id",
     (err, result) => {
       if (err) throw new Error(err);
       //console.log(result[0].dt);
@@ -151,6 +151,7 @@ app.post("/posts", validateToken, (req, res) => {
       title: post.title,
       postText: post.postText,
       username: req.user.username,
+      userID: req.user.id,
      // username: post.username,
     },
     (err) => {
@@ -176,6 +177,16 @@ app.get("/byId/:id", (req,res) => {
 app.get("/singlePost/byId/:id", (req, res) => {
   id = req.params.id;
   db.query(`SELECT * FROM posts WHERE id = ${id}`, (err, result) => {
+    if (err) throw new Error(err);
+    res.json(result);
+    //res.end();
+  });
+});
+
+
+app.get("/byuserId/:id", (req, res) => {
+  id = req.params.id;
+  db.query(`SELECT * FROM posts WHERE userID = ${id}`, (err, result) => {
     if (err) throw new Error(err);
     res.json(result);
     //res.end();

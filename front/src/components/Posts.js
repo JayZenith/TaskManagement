@@ -79,7 +79,10 @@ function Posts() {
                     navigate(`/singlePost/${val.id}`);
                   }}
             > {val.postText} </div>
-            <div className="footer"> {val.username} 
+            <div className="footer"> 
+              <div className="username">
+                <Link to={`/profile/${val.userID}`}>{val.username} </Link>
+              </div>
                 
                 <i class="bi bi-hand-thumbs-up"
                   onClick={() => {
