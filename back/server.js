@@ -121,14 +121,7 @@ app.get("/posts", validateToken, (req, res) => {
       //res.end();
     }
   );
-  /*
-    
-    db.query('SELECT * FROM posts', (err,result) => {
-        if (err) throw new Error(err);
-        res.json(result);
-        res.end();
-    })
-    */
+
 });
 
 app.post("/posts", validateToken, (req, res) => {
@@ -150,17 +143,6 @@ app.post("/posts", validateToken, (req, res) => {
   );
 });
 
-
-/*
-app.get("/byId/:id", (req,res) => {
-    id = req.params.id;
-    db.query(`SELECT * FROM posts`, (err, result) => {
-        if(err) throw new Error(err);
-        res.json(result);
-        res.end();
-    })
-})
-*/
 
 app.get("/singlePost/byId/:id", (req, res) => {
   id = req.params.id;
@@ -403,52 +385,7 @@ app.put("/changepassword", validateToken, (req,res) => {
   });
 })
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("listening server.js");
 });
 
-/*
-db.connect((err) =>{
-    if(err) throw err;
-    console.log('mysql db Connected...')
-    var sql = "CREATE TABLE IF NOT EXISTS Posts (title varchar(255), postText varchar(255), username varchar(255))";
-    db.query(sql, (err, result) => {
-        if(err) console.log(err);
-        else{
-            console.log('Table Posts connected');
-        }
-
-    })
-})
-*/
-
-app.get("/createdb", (req, res) => {
-  let sql = "CREATE DATABASE register";
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("database created...");
-  });
-});
-
-/*
-
-app.post('/signup', (req, res) => {
-    const sql = "INSERT INTO register(`userId`, `user`, `email`, `password`) VALUES (?)";
-    const{userId, user,email,pwd} = req.body
-    const values = [
-        //req.body.userId,
-        userId,
-        user,
-        email,
-        pwd
-    ]
-    db.query(sql, [values], (err, data) => {
-        if(err){
-            return res.json("Error")
-        }
-        return res.json(data);
-    })
-})
-
-*/

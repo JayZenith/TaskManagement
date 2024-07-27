@@ -51,9 +51,8 @@ function Login() {
 
   return (
     <>
-        <div className="body">
-            <div className="wrapper">
-                <div className="signup">
+        <div className="loginContainer">
+                
                     <form action="POST">
                         <h1>Login</h1>
                         <div className="input-box">
@@ -65,20 +64,19 @@ function Login() {
                             <i className="bi bi-lock"></i>
                         </div>
                         <div className="remember-forgot"> 
-                            <label><input type="checkbox"/> REmember Me</label>
+                            <label><input type="checkbox"/> Remember Me</label>
                             <Link to="#">Forgot Password</Link>
                         </div> 
 
                         <input className="btn" type="submit" onClick={submit}/>
 
-                        <div className="login-link">
+                        <div className="register-link">
                             <p>No Account? <Link to="/signup">Signup</Link></p>
                         </div>
                     </form>
 
                     {/*<Link to="/">Login</Link>*/}
-                </div>
-            </div>
+               
         </div>
     </>
   )

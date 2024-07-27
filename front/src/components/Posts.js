@@ -67,7 +67,7 @@ function Posts() {
 
   return (
     <div className="App">
-      <Link to="/createpost">Create A Post</Link>
+      <Link to="/createpost"><h1 id="createPost">Create A Post</h1></Link>
       {listOfPosts.map((val, key) => {
         return (
           <div

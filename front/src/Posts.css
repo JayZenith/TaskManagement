@@ -1,4 +1,8 @@
 /*POSTS*/
+.App h1 #createPost{
+  font-size: 100px;
+  text-decoration: none;
+}
 
 .App{
     width: 100vw;

@@ -3,7 +3,7 @@ import axios from "axios"
 import { useNavigate, Link } from 'react-router-dom'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { uuid } from './uuid';
-import '../Login.css';
+import '../Signup.css';
 
 
 function Signup() {
@@ -11,7 +11,7 @@ function Signup() {
   const userRef = useRef();
   const errRef = useRef();
   const [userId] = useState(uuid());
-  console.log(userId);
+  //console.log(userId);
 
 
   const [user, setUser] = useState('');
@@ -49,15 +49,15 @@ function Signup() {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
+    //console.log(result);
+    //console.log(user);
     setValidName(result); //element now true 
   }, [user]) //only run this when user state changed 
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
+    //console.log(result);
+    //console.log(pwd);
     setValidPwd(result); //password is true 
     const match = pwd === matchPwd;
     setValidMatch(match); //passwords match 
@@ -65,8 +65,8 @@ function Signup() {
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
-    console.log(result);
-    console.log(email);
+    //console.log(result);
+    //console.log(email);
     setValidEmail(result); //password is true 
   }, [email])
 
@@ -122,8 +122,8 @@ function Signup() {
     }
 
     try{
-        console.log("\n\n\n\nHere\n\n\n\n\n")
-        console.log(user)
+        //console.log("\n\n\n\nHere\n\n\n\n\n")
+        //console.log(user)
         await axios.post("http://localhost:3001/signup", {
             //userId,user,email,pwd
             user, pwd, email
@@ -172,11 +172,11 @@ function Signup() {
                         <div className="input-box">
                             <label htmlFor='username'>
                                 <span className={validName ? "valid" : "hide"}>
-                                    <i class="bi bi-check"></i>
+                                    <i className="bi bi-check"></i>
                                 </span>
                                 <span className={validName || !user ?  "hide" :
                                 "invalid"}>
-                                    <i class="bi bi-x"></i>
+                                    <i className="bi bi-x"></i>
                                 </span>
                             </label>
                             <input 
@@ -204,11 +204,11 @@ function Signup() {
 
                             <label htmlFor='email'>
                                 <span className={validEmail ? "valid" : "hide"}>
-                                    <i class="bi bi-check"></i>
+                                    <i className="bi bi-check"></i>
                                 </span>
                                 <span className={validEmail || !email ?  "hide" :
                                 "invalid"}>
-                                    <i class="bi bi-x"></i>
+                                    <i className="bi bi-x"></i>
                                 </span>
                             </label>
                             <input 
@@ -231,11 +231,11 @@ function Signup() {
                         <div className="input-box">
                             <label htmlFor='password'>
                                 <span className={validPwd ? "valid" : "hide"}>
-                                    <i class="bi bi-check"></i>
+                                    <i className="bi bi-check"></i>
                                 </span>
                                 <span className={validPwd || !pwd ?  "hide" :
                                 "invalid"}>
-                                    <i class="bi bi-x"></i>
+                                    <i className="bi bi-x"></i>
                                 </span>
                             </label>
                             <input 
@@ -263,11 +263,11 @@ function Signup() {
                         <div className="input-box">
                             <label htmlFor='confirm_pwd'>
                                 <span className={validMatch && matchPwd ? "valid" : "hide"}>
-                                    <i class="bi bi-check"></i>
+                                    <i className="bi bi-check"></i>
                                 </span>
                                 <span className={validMatch || !matchPwd ?  "hide" :
                                 "invalid"}>
-                                    <i class="bi bi-x"></i>
+                                    <i className="bi bi-x"></i>
                                 </span>
                             </label>
                             <input 

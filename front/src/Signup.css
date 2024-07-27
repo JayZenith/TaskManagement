@@ -1,0 +1,61 @@
+
+
+
+/*uSER LOGIN*/
+
+  
+
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 400px;
+    padding: 10px;
+    border-bottom: 2px solid;
+    outline: none;
+  }
+
+  
+  
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+  }
+  
+  label,
+  button {
+    margin-top: 2rem;
+    padding: 10px 0px;
+    border-radius: 20px;
+  }
+  
+  .instructions > svg {
+    margin-right: 0.25rem;
+  }
+  
+  .offscreen {
+    position: absolute;
+    left: -9999px;
+  }
+  
+  
+  .errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  
+  

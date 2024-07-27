@@ -15,6 +15,8 @@ import Profile from "./components/Profile";
 import Settings from "./components/Settings";
 
 function App() {
+  let location = useNavigate()
+  
 
   const [authState, setAuthState] = useState({
     username: "", 
@@ -42,16 +44,21 @@ function App() {
       });
   }, []);
 
+  
   const logout = () => {
+    
     localStorage.removeItem("accessToken");
     setAuthState({username:"", id:0, status: false});
-    //navigate("/");
+    
+    location("/");
   }
+ 
 
   return (
+    
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
-        <Router>
+      {/*<Router>*/}
           <div className="navbar">
             
             {/*}
@@ -87,8 +94,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/task" element={<Task />} />
+            {/*<Route path="/home" element={<Home />} /> */}
+            {/*<Route path="/task" element={<Task />} /> */}
             <Route path="/post" element={<Posts />} />
             <Route path="/createpost" element={<CreatePost />} />
             <Route path="/singlePost/:id" element={<SinglePost />} />
@@ -96,7 +103,7 @@ function App() {
             <Route path="/Settings/:id" element={<Settings />} />
             <Route path="*" element={<PageNotFound/>} />
           </Routes>
-        </Router>
+        {/*</Router>*/}
       </AuthContext.Provider>
     </div>
   );

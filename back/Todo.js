@@ -1,3 +1,4 @@
+/*
 const mongoose = require('mongoose')
 
 
@@ -17,3 +18,5 @@ const TodoSchema = new mongoose.Schema({
 
 const TodoModel = mongoose.model("todos", TodoSchema)
 module.exports = TodoModel
+
+*/

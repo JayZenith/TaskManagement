@@ -1,3 +1,4 @@
+/*
 const mongoose = require("mongoose")
 mongoose.connect("mongodb+srv://Iamgenius8:XfxSX6jSmVAUzlbi@mern-cluster.d4a3fdx.mongodb.net/")
 .then(()=>{
@@ -33,3 +34,4 @@ const collection = mongoose.model("collection", newSchema)
 
 module.exports=collection
 
+*/

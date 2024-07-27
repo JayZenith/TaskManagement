@@ -18,6 +18,8 @@ function Settings() {
       if(response.data.error){
         alert(response.data.error);
       }
+      
+
 
     })
   };

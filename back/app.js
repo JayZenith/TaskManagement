@@ -1,3 +1,5 @@
+
+/*
 const express = require('express')
 const collection = require('./mongo')
 const TodoModel = require('./Todo')
@@ -110,6 +112,7 @@ app.get('/retreive/:id', (req, res) => {
 })
 */
 
+/*
 app.put('/update/:id', (req, res) => {
     const {id} = req.params;
     //insert
